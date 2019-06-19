@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>书籍搜索页面</title>
+<style type="text/css">
+h1 {color:#FF0000;}
+p {color:#0000FF;}
+body {background-color:#FFEFD6;}
+.cont1{
+    height:  30px;
+    width: 300px;
+}
+.anniu{
+    height:  30px;
+    width: 300px; 
+}
+.anniu{
+    height:  30px;
+    width: 300px; 
+}
+</style>
+
+</head>
+<body>
+<a href=/index>返回主页面</a>
+<a href=/search_book_page>返回搜索页面</a>
+<div  style="text-align:center;padding-top:300px;">
+
+    {% if  message %}
+      <h1>{{ message }}</h1>
+    {% endif %}
+
+
+<h1>输入搜索内容点击按钮获取资料</h1>
+  <form method="post"  action="/search_result">
+  {%csrf_token%}
+    <input type="text" class="cont1" name="cont1"><br>
+    <input type="submit" class="anniu" value="点击搜索《书籍类》">
+
+  </form>
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+        /* 鼠标点击特效 - 7Core.CN */
+    	var a_idx = 0;jQuery(document).ready(function($) {$("body").click(function(e) {var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等", "公正" ,"法治", "爱国", "敬业", "诚信", "友善");var $i = $("<span/>").text(a[a_idx]);
+        a_idx = (a_idx + 1) % a.length;var x = e.pageX,y = e.pageY;$i.css({"z-index": 100000000,"top": y - 20,"left": x,"position": "absolute","font-weight": "bold","color": "#ff6651"});$("body").append($i);$i.animate({"top": y - 180,"opacity": 0},1500,function() {$i.remove();});});});
+</script>
+</body>
+
+
+
+</html>
+
+   <!--    <input type="submit" class="anniu" value="点击搜索《其他类》">  -->
+   
+   
+   
+    <!--
+   
+   <td  title="${item.netprobe_nmap_running}">
+	<c:choose>
+		<c:when test="${fn:length(item.netprobe_nmap_running)>30}">
+		${fn:substring(item.netprobe_nmap_running, 0, 30)}...
+		</c:when>
+		<c:otherwise>${item.netprobe_nmap_running}</c:otherwise>
+	</c:choose>
+</td>
+
+   
+    -->
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   

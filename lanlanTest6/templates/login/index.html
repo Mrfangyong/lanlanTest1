@@ -1,0 +1,32 @@
+
+{% extends 'login/base.html' %}
+
+
+{% block title %}主页{% endblock %}
+{% block content %}
+    
+    {% if request.session.is_login %}
+
+
+
+    <h1>你好,{{ request.session.user_name }}！欢迎回来！</h1>
+
+    
+    <div style="text-align:center;padding-top:200px; font-size:20px;">
+    <a href="/search_book_page" >书籍类搜索</a><br>
+    </div>
+    <div style="text-align:center;padding-top:30px; font-size:20px;">
+    <a href="/search_word" >爬虫类搜索</a>
+   </div>
+   <div style="text-align:center;padding-top:30px; font-size:20px;">
+    <a href="/search_picture" >图片搜索</a>
+   </div>
+    {% else %}
+    
+    <div style="text-align:center;padding-top:300px;">
+    <h1>你尚未登录，只能访问公开内容！</h1>
+    </div>
+    
+    {% endif %}
+    {% endblock %}
+

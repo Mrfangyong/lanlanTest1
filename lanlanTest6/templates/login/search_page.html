@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>搜索爬虫类页面</title>
+</head>
+<style type="text/css">
+h1 {color:#FF0000;}
+p {color:#0000FF;}
+body {
+     background-color:#FFEFD6;
+     padding-left:center;
+}
+.select{
+  padding-left:center;
+    }
+.cont1{
+    height:  30px;
+    width: 300px;
+}
+.anniu{
+    height:  30px;
+    width: 300px; 
+}
+.anniu{
+    height:  30px;
+    width: 300px; 
+}
+</style>
+<body>
+<a href=/index>返回主页面</a>
+<a href=/search_word>返回搜索页面</a>
+    <form  id="login" name="login" method ="post" action="/crawler_result/">
+    <h2>请选择搜索类别</h2>
+	    <select style="width:118px;margin-left:100px;height:25px" onchange="A()" id="SS" name="box">
+	        <option value="-1" selected="selected">请选择</option>
+	        {% for k,n in names.items %}
+	        <option id="name" value="{{k}}">{{n}}</option>
+	        {% endfor %}
+	    </select>
+    
+    
+    <h2>请选择搜索字数区间</h2>
+	    <select style="width:118px;margin-left:100px;height:25px" onchange="A()" id="SS" name="section">
+	        <option value="-1" selected="selected">请选择</option>
+	        <option value="1">100字--200字</option>
+	        <option value="2">200字--400字</option>
+	        <option value="3">400字--800字</option>
+	        <option value="4">800字以上</option>
+	    </select><br><br><br><br><br><br>
+    <input name="boxname" id="box" type="hidden"  style="position:absolute" >
+    <input type="text" style="width:118px;margin-left:100px;height:25px" name="cont"  required="required">
+    <input id="subLogin"   name ="subLogin" type="submit" value="提交" /><!--提交按钮-->
+    {% csrf_token %}
+</form>
+		
+				<div>
+						<h3>搜索问题</h3>
+						<form method="post"  action="search_issue">
+						 {% csrf_token %}
+						    <table>
+						       <tr>
+						           <td><input type="text" name="headline"></td>
+						           <td><input type="submit" value="点击搜索""></td>
+						       </tr>
+						    </table>
+						</form>
+				</div>
+
+
+<script language="javascript">
+    function A(){
+       document.getElementById('box').value=
+       document.getElementById('SS').options[document.getElementById('SS').selectedIndex].value;
+{#       document.getElementById('SS').value;#}
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+{% load static %} 
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>非虚构类搜索页面</title>
+    <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+	<script src="{% static 'bootstrap/js/jquery-3.3.1.min.js' %}"></script>
+	<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<style type="text/css">
+
+</style> 
+</head>
+<style>
+
+.tables{
+width: 100%;
+height: 100%;
+table-layout: fixed;
+}
+</style>
+<body>
+<a href=/index>返回主页面</a>
+<a href=/search_word>返回搜索页面</a>
+<h1  style="text-align:center;">所有内容</h1>
+<div  style="text-align:center;padding-top:3px; color:red;">
+  {% if message %}
+      <h2>{{message}}</h2>
+  {% endif %}
+</div>
+<div>
+     {% for good in page %}
+     <form method="post"   id="formadd" action="{% url 'collect_l' %}" style="padding-left:200px;padding-right:200px;">
+     {% csrf_token %}
+     <h5 style="text-align:center;color:blue;">{{good.2}}</h5>
+       <tr>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{good.1}}</td><br><br>
+          <td><input type="hidden" name="sc_id" id="id" value="{{good.0}}" ></td>
+	      <td><button type="button" id="{{good.0}}" onclick="submit_sc_func(this)">点击收藏</button></td>
+	      <td><button type="button" id="{{good.0}}" onclick="del_sc_func(this)">点击报错</button></td>
+	      <td>收藏次数：{{good.3}}</td>
+		  <td>报错次数：{{good.4}}</td>
+       </tr>  
+       </form>
+      {% endfor %}   
+    </div>
+<div  style="text-align:center;" >
+ 
+<ul class="pagination"> 
+{# 如果当前页还有上一页 #} 
+
+{% if page.has_previous %} 
+<li><a href="?index={{page.previous_page_number}}">上一页</a></li> 
+{% else %} 
+<li class="disabled"> <a href="#">上一页</a> </li> 
+{% endif %} 
+{% for page_number in paginator.page_range %} 
+{# 获取当前页的页码 #} 
+{% if page_number == page.number %} 
+
+{# 如果是当前页的话，选中 #}
+ <li class="active"> <a href="?index={{page_number}}">{{page_number}}</a> </li> 
+ {% else %} 
+ <li> <a href="?index={{page_number}}">{{page_number}}</a> </li> 
+ {% endif %} 
+ {% endfor %} 
+ 
+ {% if page.has_next %} 
+ <li> <a href="?index={{page.next_page_number}}">下一页</a> </li> 
+ {% else %}
+ 
+ <li class="disabled"> <a href="#">下一页</a> </li> 
+ {% endif %}
+
+		第{{ page.number }}页 | 共{{ page.paginator.num_pages }}页
+	<span style="font-size:12px">第</span>
+ <input name="pageg" type="text" value="" id="pageg" size="3" height="18px">
+ <span style="font-size:12px">页</span>
+    <input type="button" name="submit" value="跳转" class=input2 onclick="page()">
+		
+
+ 
+ </ul> 
+   </div>          
+<script src={% static 'jquery-3.3.1/jquery-3.3.1.min.js' %}></script>
+    <script>
+        $(document).ready(function(){
+            $.ajaxSetup({
+                 data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+            });
+        });
+	 function submit_sc_func(obj){
+		 var sc_id = $(obj).attr('id')
+	     $.ajax({
+	         type:"POST",
+	         data: {'sc_id': sc_id},
+	         url: "{% url 'word_collect' %}", //后台处理函数的url 这里用的是static url 需要与urls.py中的name一致
+	         cache: false,
+	         dataType: "html",
+	         success: function(result, statues, xml){
+	             alert(result);                                         //成功时弹出view传回来的结果
+	         },
+	         error: function(){
+	             alert("false");
+	         }
+	     });
+	 };
+	 function del_sc_func(obj){
+			var sc_id = $(obj).attr('id')
+			$.ajax({
+			type:"POST",
+			data: {'sc_id': sc_id},
+			url: "{% url 'del_word' %}", //后台处理函数的url 这里用的是static url 需要与urls.py中的name一致
+			cache: false,
+			dataType: "html",
+			success: function(result, statues, xml){
+			  alert(result);                                         //成功时弹出view传回来的结果
+			},
+			error: function(){
+			  alert("false");
+			}
+			});
+			} ;
+	  function page() {
+        	window.location.href="?index="+ document.getElementById("pageg").value;
+        	};
+	 
+	
+
+    </script>
+</body>
+</html>
